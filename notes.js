@@ -1,5 +1,6 @@
 const { log } = require("console");
 const fs = require("fs");
+const chalk = require("chalk");
 
 const getNotes = function () {
   return "Your notes...";
@@ -17,10 +18,12 @@ const addNote = (title, body) => {
       title: title,
       body: body,
     });
-
+    console.log(chalk.bold.green.inverse(`added note with title: ${title}`));
     saveNotes(notes);
   } else {
-    console.log("a note with that title already exists");
+    console.log(
+      chalk.red.bold.inverse("a note with that title already exists")
+    );
   }
 };
 
@@ -32,11 +35,12 @@ const removeNote = (title) => {
   });
 
   if (note.length === 0) {
-    console.log("there is not a note with that title");
+    console.log(chalk.red.bold.inverse("there is not a note with that title"));
   } else {
     const newNotes = notes.filter(function (note) {
       return note.title !== title ? true : false;
     });
+    console.log(chalk.bold.green.inverse(`removed note with title: ${title}`));
     saveNotes(newNotes);
   }
 };
